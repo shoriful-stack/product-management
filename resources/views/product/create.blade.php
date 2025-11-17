@@ -1,0 +1,67 @@
+@extends('layouts.app')
+@section('title', 'Add Product')
+
+@section('content')
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Add New Product</h3>
+        <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
+    </div>
+
+    <div class="card shadow border-0 rounded-3">
+        <div class="card-body">
+            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Product ID</label>
+                        <input type="text" name="product_id" class="form-control" placeholder="e.g. P-1001" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter product name" required>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description</label>
+                    <textarea name="description" class="form-control" rows="4" placeholder="Write product description"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Price</label>
+                        <input type="number" step="0.01" name="price" class="form-control" placeholder="Enter product price" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Stock</label>
+                        <input type="number" name="stock" class="form-control" placeholder="Enter stock quantity" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Product Image</label>
+                        <input type="file" name="image" class="form-control" required>
+                    </div>
+
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">
+                        Save Product
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@endsection
