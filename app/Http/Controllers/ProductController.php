@@ -52,4 +52,8 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product Created Successfully!');
     }
+    public function show(Product $product)
+    {
+        return view('product.show', compact('product'));
+    }
 }
