@@ -12,7 +12,7 @@
 
     <div class="card shadow border-0 rounded-3">
         <div class="card-body">
-            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" method="POST">
                 @csrf
 
                 <div class="row">
@@ -46,7 +46,8 @@
 
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-bold">Product Image</label>
-                        <input type="file" name="image" class="form-control" required>
+                        <input type="file" id="imageInput" class="form-control">
+                        <input type="hidden" name="image" id="imageBase64">
                     </div>
 
                 </div>
@@ -64,4 +65,20 @@
 
 </div>
 
+@endsection
+@section('script')
+<script>
+    document.getElementById('imageInput').addEventListener('change', function() {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function() {
+            const base64 = reader.result;
+            localStorage.setItem("product_image", base64);
+            document.getElementById('imageBase64').value = base64;
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
 @endsection

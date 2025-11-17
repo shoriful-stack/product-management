@@ -36,7 +36,7 @@
                         <td>${{ number_format($p->price, 2) }}</td>
 
                         <td>
-                            <img src="data:image/png;base64,{{ $p->image }}"
+                            <img src="{{ asset('storage/' . $p->image) }}"
                                 width="60"
                                 class="rounded shadow-sm"
                                 alt="Product Image">
