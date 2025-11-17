@@ -56,4 +56,53 @@ class ProductController extends Controller
     {
         return view('product.show', compact('product'));
     }
+    public function edit(Product $product)
+    {
+        return view('product.edit', compact('product'));
+    }
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'product_id'   => 'required|unique:products,product_id,' . $product->id,
+            'name'         => 'required|string',
+            'description'  => 'nullable|string',
+            'price'        => 'required|numeric',
+            'stock'        => 'required|integer',
+            'image'        => 'required|string',
+        ]);
+
+        $imageData = $request->image;
+        $imageName = $product->image;
+
+        if (preg_match('/^data:image\/\w+;base64,/', $imageData)) {
+            $imageName = time() . '_' . uniqid() . '.png';
+            $imagePath = storage_path('app/public/products/' . $imageName);
+
+            if (!file_exists(dirname($imagePath))) {
+                mkdir(dirname($imagePath), 0755, true);
+            }
+
+            $base64Data = preg_replace('#^data:image/\w+;base64,#i', '', $imageData);
+            file_put_contents($imagePath, base64_decode($base64Data));
+
+            if ($product->image && file_exists(storage_path('app/public/' . $product->image))) {
+                unlink(storage_path('app/public/' . $product->image));
+            }
+
+            $dbPath = 'products/' . $imageName;
+        } else {
+            $dbPath = $product->image;
+        }
+
+        $product->update([
+            'product_id'  => $request->product_id,
+            'name'        => $request->name,
+            'description' => $request->description,
+            'price'       => $request->price,
+            'stock'       => $request->stock,
+            'image'       => $dbPath,
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Product Updated Successfully!');
+    }
 }
