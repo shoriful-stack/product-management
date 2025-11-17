@@ -7,7 +7,9 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="fw-bold">Add New Product</h3>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Products
+        </a>
     </div>
 
     <div class="card shadow border-0 rounded-3">

@@ -76,8 +76,8 @@
         </div>
     </div>
 
-    <div class="mt-3">
-        {{ $products->links() }}
+    <div class="mt-3 mb-4 d-flex justify-content-center">
+        {{ $products->links('pagination::bootstrap-5') }}
     </div>
 
 </div>

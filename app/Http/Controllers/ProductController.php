@@ -105,4 +105,13 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product Updated Successfully!');
     }
+    public function destroy(Product $product)
+    {
+        if ($product->image && file_exists(storage_path('app/public/' . $product->image))) {
+            unlink(storage_path('app/public/' . $product->image));
+        }
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product Deleted Successfully!');
+    }
 }
